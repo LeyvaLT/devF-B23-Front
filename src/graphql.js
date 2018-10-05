@@ -5,7 +5,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory'
 
 // Obtenemos el Endpoint de nuestro Graphql
 const httpLink = createHttpLink({
-    uri:"http://netflix-clone-b23.herokuapp.com/"
+    uri:"https://instabackend.herokuapp.com/"
 });
 
 

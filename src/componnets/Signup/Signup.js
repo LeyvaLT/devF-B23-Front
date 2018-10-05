@@ -4,21 +4,21 @@ import {Mutation} from 'react-apollo';
 
 // Equivalente a una Peticion REST
 const CREATE_USER = gql`
-    mutation signup($name:String!,$email:String!,$lastname:String!,$password:String!,$birth_date:String!){
-        signup(
-            name:$name
-            email:$email
-            lastname:$lastname
-            password:$password
-            birth_date:$birth_date
-        ){
-            user{
-                id
-                email
-            }
-            token
-        }
-    }
+   mutation signup($email: String!, $nickname: String!, $password: String!){
+      signup(
+        email: $email,
+        nickname: $nickname,
+        password: $password
+      ){
+        token,
+        user{
+          id,
+          nickname,
+          email
+        }  
+  }
+  
+}
 `;
 
 class Signup extends Component {
@@ -26,11 +26,9 @@ class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
             email: '',
-            lastname: '',
-            password: '',
-            birth_date: ''
+            nickname: '',
+            password: ''
         }
     }
 
@@ -47,16 +45,15 @@ class Signup extends Component {
         console.log(this.state);
         signup({
             variables: {
-                name: this.state.name,
                 email: this.state.email,
-                lastname: this.state.lastname,
-                password: this.state.password,
-                birth_date: this.state.birth_date
+                nickname: this.state.nickname,
+                password: this.state.password
             }
         })
             .then(response =>{
                 console.log(response);
-                alert('Todo chido carnal')
+                this.props.history.push('/login');
+                alert('Todo chido carnal, ahora logeate')
             })
             .catch(error =>{
                 console.log(error);
@@ -79,29 +76,14 @@ class Signup extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Name</label>
-                                <input type="text" className="form-control" placeholder="Enter a name"
-                                       id="name"
+                                <label>nickName</label>
+                                <input type="text" className="form-control" placeholder="Enter a nickname"
+                                       id="nickname"
                                        onChange={this.onInputChange}
-                                       value={this.state.name}
+                                       value={this.state.nickname}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Last name</label>
-                                <input type="text" className="form-control" placeholder="Enter a lastname"
-                                       id="lastname"
-                                       onChange={this.onInputChange}
-                                       value={this.state.lastname}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Birth date</label>
-                                <input type="text" className="form-control" placeholder="Enter a birth date"
-                                       id="birth_date"
-                                       onChange={this.onInputChange}
-                                       value={this.state.birth_date}
-                                />
-                            </div>
+
                             <div className="form-group">
                                 <label>Password</label>
                                 <input type="password" className="form-control" placeholder="Enter password"

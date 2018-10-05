@@ -11,8 +11,8 @@ const MUTATION_LOGIN = gql `
             password: $password
           ){
             token
-                user{
-              name
+            user{
+              nickname
             }
           }
           
@@ -51,6 +51,7 @@ onInputChange = (event) => {
             .then(response => {
                 localStorage.setItem('token',response.data.login.token);
                 //console.log(response.data.login.token);
+                this.props.history.push('/');
                 alert('Ya te logeaste carnal');
             })
             .catch(error =>{
